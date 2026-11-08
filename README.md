@@ -12,6 +12,15 @@ An end-to-end, reusable ML pipeline (MLflow + Hydra + Weights & Biases) that dow
 * Validation MAE: 34.13 (R² 0.55)
 * Test MAE: 33.85 (R² 0.56), so performance on the test set matches validation (no overfitting)
 
+## Releases
+* **1.0.0**: first release. Running it on the new data sample (`sample2.csv`) failed at `test_proper_boundaries`, because the new data contains a listing outside of NYC. The data test caught the problem before training.
+* **1.0.1**: added a cleaning step in `basic_cleaning` that drops listings outside the NYC area (longitude -74.25 to -73.50, latitude 40.5 to 41.2). Running 1.0.1 on `sample2.csv` passed all data tests and trained a new model (validation MAE 32.42, R² 0.58).
+
+Run a release with:
+```bash
+mlflow run https://github.com/iamsangitsharma/Project-Build-an-ML-Pipeline-Starter.git -v 1.0.1 -P hydra_options="etl.sample='sample2.csv'"
+```
+
 ---
 
 # Build an ML Pipeline for Short-Term Rental Prices in NYC
