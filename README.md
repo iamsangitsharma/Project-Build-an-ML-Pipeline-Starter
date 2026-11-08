@@ -1,4 +1,20 @@
 # Build an ML Pipeline for Short-Term Rental Prices in NYC
+
+**Weights & Biases project:** https://wandb.ai/iamsangitsharma-western-governors-university/nyc_airbnb
+
+**GitHub repository:** https://github.com/iamsangitsharma/Project-Build-an-ML-Pipeline-Starter
+
+An end-to-end, reusable ML pipeline (MLflow + Hydra + Weights & Biases) that downloads the rental data, cleans it, tests it, splits it, trains a Random Forest price model, and tests the production model.
+
+## Results
+* Best model: Random Forest with `max_depth=15`, `n_estimators=100` (stored as the defaults in `config.yaml`)
+* Hyperparameter search: `max_depth` in {10, 50} and `n_estimators` in {100, 200}; none beat the default settings
+* Validation MAE: 34.13 (R² 0.55)
+* Test MAE: 33.85 (R² 0.56), so performance on the test set matches validation (no overfitting)
+
+---
+
+# Build an ML Pipeline for Short-Term Rental Prices in NYC
 You are working for a property management company renting rooms and properties for short periods of 
 time on various rental platforms. You need to estimate the typical price for a given property based 
 on the price of similar properties. Your company receives new data in bulk every week. The model needs 
