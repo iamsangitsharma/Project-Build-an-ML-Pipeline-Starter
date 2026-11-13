@@ -7,10 +7,19 @@
 An end-to-end, reusable ML pipeline (MLflow + Hydra + Weights & Biases) that downloads the rental data, cleans it, tests it, splits it, trains a Random Forest price model, and tests the production model.
 
 ## Results
-* Best model: Random Forest with `max_depth=15`, `n_estimators=100` (stored as the defaults in `config.yaml`)
-* Hyperparameter search: `max_depth` in {10, 50} and `n_estimators` in {100, 200}; none beat the default settings
-* Validation MAE: 34.13 (R² 0.55)
-* Test MAE: 33.85 (R² 0.56), so performance on the test set matches validation (no overfitting)
+* Hyperparameter search (Hydra multi-run): `max_depth` in {10, 15, 50} and `n_estimators` in {100, 200}, 6 training runs, all logged to W&B as the `model_export` artifact
+* Best model (lowest validation MAE): run `ancient-hill-29`, `model_export:v3`, with `max_depth=15` and `n_estimators=200`. It is tagged `prod` in W&B, and these values are now the defaults in `config.yaml`
+* Validation MAE: 34.09 (R² 0.55)
+* Test MAE: 33.70 (R² 0.57), so performance on the test set matches validation (no overfitting)
+
+## W&B screenshots (from my own W&B account)
+* Pipeline graph (lineage of the production model): `screenshots/wandb_pipeline_graph.png`
+* Best model `model_export:v3` tagged `prod`: `screenshots/wandb_model_export_prod.png`
+* Cleaned data `clean_data.csv:v0` tagged `reference`: `screenshots/wandb_clean_data_reference.png`
+
+![Pipeline graph](screenshots/wandb_pipeline_graph.png)
+
+Note: the `images/` folder comes from the Udacity starter kit and shows the instructor's example W&B account. My own screenshots are in `screenshots/`.
 
 ## Releases
 * **1.0.0**: first release. Running it on the new data sample (`sample2.csv`) failed at `test_proper_boundaries`, because the new data contains a listing outside of NYC. The data test caught the problem before training.
